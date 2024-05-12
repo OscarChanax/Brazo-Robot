@@ -206,9 +206,9 @@ namespace Proyecto_3
             // !!IMPORTANTE LOS DATOS QUE SE ENVIAN SON DATOS CON SEPARADOR DECIMAL PUNTO DE LO
             // !!CONTRARIO NO SE REALIZARA UNA CORRECTA CONVERSION DE DATOS A DOUBLE¡¡
 
-            Arduino.WriteLine(q1.ToString(System.Globalization.CultureInfo.InvariantCulture) +" "+q2.ToString(System.Globalization.CultureInfo.InvariantCulture)+
-                " " + a1.ToString(System.Globalization.CultureInfo.InvariantCulture)+" "+ a2.ToString(System.Globalization.CultureInfo.InvariantCulture)+
-                " " + Px.ToString(System.Globalization.CultureInfo.InvariantCulture) + " " + Py.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            Arduino.WriteLine(q1.ToString(System.Globalization.CultureInfo.InvariantCulture) +","+q2.ToString(System.Globalization.CultureInfo.InvariantCulture)+
+                ","+ a1.ToString(System.Globalization.CultureInfo.InvariantCulture)+","+ a2.ToString(System.Globalization.CultureInfo.InvariantCulture)+
+                ","+ Px.ToString(System.Globalization.CultureInfo.InvariantCulture) + "," + Py.ToString(System.Globalization.CultureInfo.InvariantCulture));
            // Arduino.WriteLine(q2.ToString());
             
 
