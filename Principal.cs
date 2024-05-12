@@ -112,6 +112,7 @@ namespace Proyecto_3
             {
                 Arduino.Close();
             }
+          
         }
 
         private void buttonConectar_BackColorChanged(object sender, EventArgs e)
@@ -119,26 +120,13 @@ namespace Proyecto_3
 
         }
 
-        private void trackBarHorizontal_Scroll(object sender, EventArgs e)
-        {
-            labelValorhorizontal.Text = "Valor: " + trackBarHorizontal.Value.ToString();
-
-            int brilloLed = trackBarHorizontal.Value;
-            Arduino.WriteLine(brilloLed.ToString());
-        }
+     
 
         private void labelValorhorizontal_Click(object sender, EventArgs e)
         {
 
         }
-
-        private void trackBarVertical_Scroll(object sender, EventArgs e)
-        {
-            labelValorvertical.Text = "Valor: " + trackBarVertical.Value.ToString();
-
-            int brilloLed = trackBarVertical.Value;
-            Arduino.WriteLine(brilloLed.ToString());
-        }
+    
 
         private void panel3_Paint(object sender, PaintEventArgs e)
         {
@@ -225,6 +213,16 @@ namespace Proyecto_3
             
 
 
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Arduino.Write("hola mundo");
         }
     }
 }
