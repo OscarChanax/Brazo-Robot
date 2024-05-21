@@ -42,8 +42,10 @@ namespace Proyecto_3
 
         private void Form1_Load(object sender, EventArgs e)
         {
-         
-           
+         button2.Visible = false;
+            textBoxA1.Text = "11,5";
+            textBoxA2.Text = "20,5";
+        
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -98,7 +100,32 @@ namespace Proyecto_3
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            Arduino.Write("E");
+
+            double a1 = 11.5;
+            double a2 = 20.5;
+            double Px = 40;
+            double Py = 100;
+
+            //Variables para almacenamiento de datos del efector final
+            double q01 = 180;
+            double q02 = 0;
+
+
+
+            //Obtengo los valores
+            //a1 = double.Parse(textBoxA1.Text);
+           //a2 = double.Parse(textBoxA2.Text);
+            //Px = double.Parse(textBoxPx.Text);
+            //Py = double.Parse(textBoxPy.Text);
+
+
+
+
+            Arduino.WriteLine(q01.ToString(System.Globalization.CultureInfo.InvariantCulture) + "," + q02.ToString(System.Globalization.CultureInfo.InvariantCulture) +
+               "," + a1.ToString(System.Globalization.CultureInfo.InvariantCulture) + "," + a2.ToString(System.Globalization.CultureInfo.InvariantCulture) +
+               "," + Px.ToString(System.Globalization.CultureInfo.InvariantCulture) + "," + Py.ToString(System.Globalization.CultureInfo.InvariantCulture));
+
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -176,6 +203,7 @@ namespace Proyecto_3
 
             Q2 = -Math.Acos((Math.Pow(Px,2)+Math.Pow(Py,2)-Math.Pow(a1,2)-Math.Pow(a2,2))/(2*a1*a2));
 
+            
 
             //Formula Q1 Para efector Final
 
@@ -185,31 +213,37 @@ namespace Proyecto_3
 
             // Convertir radianes a grados
             double q2 = Q2 * (180.0 / Math.PI);
+            q2 = q2 * -1;
 
             // Convertir radianes a grados
             double q1 = Q1 * (180.0 / Math.PI);
+            q1 = 90+ q1;
+            //
+
+            int q01 = (int)q1;
+            int q02 = (int)q2;
+
 
             // Muestra una ventana emergente
-            MessageBox.Show("El valor de q2 es: " + q2.ToString());
-
-
-            // Muestra una ventana emergente
-            MessageBox.Show("El valor de q1 es: " + q1.ToString());
+            MessageBox.Show("El valor de q1 es: " + q01.ToString());
 
             // Muestra una ventana emergente
-            MessageBox.Show("El valor de a1 es: " + a1.ToString());
+            MessageBox.Show("El valor de q2 es: " + q02.ToString());
 
             // Muestra una ventana emergente
-            MessageBox.Show("El valor de a1 es: " + Px.ToString());
+            //MessageBox.Show("El valor de a1 es: " + a1.ToString());
+
+            // Muestra una ventana emergente
+            // MessageBox.Show("El valor de a1 es: " + Px.ToString());
 
             //Envio los datos a arduino
             // !!IMPORTANTE LOS DATOS QUE SE ENVIAN SON DATOS CON SEPARADOR DECIMAL PUNTO DE LO
             // !!CONTRARIO NO SE REALIZARA UNA CORRECTA CONVERSION DE DATOS A DOUBLE¡¡
-
-            Arduino.WriteLine(q1.ToString(System.Globalization.CultureInfo.InvariantCulture) +","+q2.ToString(System.Globalization.CultureInfo.InvariantCulture)+
+            Px = 0;
+            Arduino.WriteLine(q01.ToString(System.Globalization.CultureInfo.InvariantCulture) +","+q02.ToString(System.Globalization.CultureInfo.InvariantCulture)+
                 ","+ a1.ToString(System.Globalization.CultureInfo.InvariantCulture)+","+ a2.ToString(System.Globalization.CultureInfo.InvariantCulture)+
                 ","+ Px.ToString(System.Globalization.CultureInfo.InvariantCulture) + "," + Py.ToString(System.Globalization.CultureInfo.InvariantCulture));
-           // Arduino.WriteLine(q2.ToString());
+           
             
 
 
@@ -222,7 +256,76 @@ namespace Proyecto_3
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Arduino.Write("hola mundo");
+        
+        }
+
+        private void buttonCalcular2_Click(object sender, EventArgs e)
+        {
+            double a1 = 0;
+            double a2 = 0;
+            double Px = 0;
+            double Py = 0;
+
+            //Variables para almacenamiento de datos del efector final
+            double Q1 = 0;
+            double Q2 = 0;
+
+
+
+            //Obtengo los valores
+            a1 = double.Parse(textBoxA1.Text);
+            a2 = double.Parse(textBoxA2.Text);
+            Px = double.Parse(textBoxPx.Text);
+            Py = double.Parse(textBoxPy.Text);
+
+
+
+
+
+
+            //Formula Q2 Para efector Final
+
+            Q2 = Math.Acos((Math.Pow(Px, 2) + Math.Pow(Py, 2) - Math.Pow(a1, 2) - Math.Pow(a2, 2)) / (2 * a1 * a2));
+
+
+            //Formula Q1 Para efector Final
+
+            Q1 = Math.Atan(Py / Px) - Math.Atan((a2 * Math.Sin(Q2)) / (a1 + a2 * Math.Cos(Q2)));
+
+
+
+            // Convertir radianes a grados
+            double q2 = Q2 * (180.0 / Math.PI);
+
+            // Convertir radianes a grados
+            double q1 = Q1 * (180.0 / Math.PI);
+
+            //
+
+
+
+            // Muestra una ventana emergente
+            MessageBox.Show("El valor de q1 es: " + q1.ToString());
+
+            // Muestra una ventana emergente
+            MessageBox.Show("El valor de q2 es: " + q2.ToString());
+
+            // Muestra una ventana emergente
+            //MessageBox.Show("El valor de a1 es: " + a1.ToString());
+
+            // Muestra una ventana emergente
+            // MessageBox.Show("El valor de a1 es: " + Px.ToString());
+
+            //Envio los datos a arduino
+            // !!IMPORTANTE LOS DATOS QUE SE ENVIAN SON DATOS CON SEPARADOR DECIMAL PUNTO DE LO
+            // !!CONTRARIO NO SE REALIZARA UNA CORRECTA CONVERSION DE DATOS A DOUBLE¡¡
+
+            Arduino.WriteLine(q1.ToString(System.Globalization.CultureInfo.InvariantCulture) + "," + q2.ToString(System.Globalization.CultureInfo.InvariantCulture) +
+                "," + a1.ToString(System.Globalization.CultureInfo.InvariantCulture) + "," + a2.ToString(System.Globalization.CultureInfo.InvariantCulture) +
+                "," + Px.ToString(System.Globalization.CultureInfo.InvariantCulture) + "," + Py.ToString(System.Globalization.CultureInfo.InvariantCulture));
+
+
+
         }
     }
 }
