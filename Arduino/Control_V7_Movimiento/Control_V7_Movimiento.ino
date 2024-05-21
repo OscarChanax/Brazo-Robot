@@ -7,8 +7,12 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <Servo.h>
 
+Servo servo1, servo2;  // create servo object to control a servo
+// twelve servo objects can be created on most boards
 
+  
 #include <SoftwareSerial.h>                                                       //Libreria para Comunicación Serial
 
 SoftwareSerial blut (10, 11); //RX, TX
@@ -23,14 +27,18 @@ SoftwareSerial blut (10, 11); //RX, TX
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-int RxArduino = 11;                                                               //Configuración Pin Receptor
-int TxArduino = 12;                                                               //Configuracion Pin Transmisor
+
 
 int led = 9;
 
 
 
 void setup() {
+//Defino pines servomotor
+
+servo1.attach(9);  // attaches the servo on pin 9 to the servo object
+servo2.attach(8);  // attaches the servo on pin 9 to the servo object
+
 
   if (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
     Serial.println(F("SSD1306 allocation failed"));
@@ -81,31 +89,6 @@ void loop()
     }
 
 
-    /*
-      int index1 = dato.indexOf(','); // Encuentra el índice del primer espacio en la cadena
-      int index2 = dato.indexOf(',', index1 + 1); // Encuentra el índice del segundo espacio en la cadena
-      int index3 = dato.indexOf(',', index2 + 1); // Encuentra el índice del tercer espacio en la cadena
-      int index4 = dato.indexOf(',', index3 + 1); // Encuentra el índice del cuarto espacio en la cadena
-      int index5 = dato.indexOf(',', index4 + 1); // Encuentra el índice del quinto espacio en la cadena
-
-
-      if (index1 != -1 && index2 != -1 && index3 != -1 && index4 != -1 && index5 != -1) { // Si se encuentran los seis espacios
-      dato1 = dato.substring(0, index1); // La primera parte de la cadena hasta el primer espacio es el primer dato
-      dato2 = dato.substring(index1 + 1, index2); // La segunda parte de la cadena entre el primer y segundo espacio es el segundo dato
-      dato3 = dato.substring(index2 + 1, index3); // La tercera parte de la cadena entre el segundo y tercer espacio es el tercer dato
-      dato4 = dato.substring(index3 + 1, index4); // La cuarta parte de la cadena entre el tercer y cuarto espacio es el cuarto dato
-      dato5 = dato.substring(index4 + 1, index5); // La quinta parte de la cadena entre el cuarto y quinto espacio es el quinto dato
-      dato6 = dato.substring(index5 + 1); // La sexta parte de la cadena después del quinto espacio es el sexto dato
-      }
-   
-      double q1 = atof(dato1.c_str());
-      double q2 = atof(dato2.c_str());
-      double a1 = atof(dato3.c_str());
-      double a2 = atof(dato4.c_str());
-      double Px = atof(dato5.c_str());
-      double Py = atof(dato6.c_str());
-
-    */
 
     //IMPRIMO LOS VALORES EN LA PANTALLA OLED
 
@@ -148,5 +131,9 @@ void loop()
     Serial.println (Py);
 
   }
+
+  //Movimiento servo
+  servo1.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);
 
 }
